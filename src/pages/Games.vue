@@ -1,0 +1,59 @@
+<template>
+  <q-page class="q-pa-lg">
+    <h5>All Games</h5>
+    <div class="row">
+      <!-- One game  -->
+
+      <div
+        class="q-pa-md col-3 col-xs-12 col-sm-6 col-lg-4 col-xl-3"
+        v-for="(game, index) in allGames"
+        :key="index"
+      >
+        <q-card class="my-card">
+          <q-card-section>
+            <div class="text-h6">{{ game.title }}</div>
+          </q-card-section>
+          <div class="q-pa-md col-12 col-md-8 row">
+            <q-parallax
+              :src="`https://i.picsum.photos/id/${game.id}/1700/1200.jpg`"
+              :height="150"
+              class="col-12 col-md-8"
+            />
+            <q-btn-group spread class="q-pa-md col-12 col-md-4 column justify-between">
+              <q-btn
+                outline
+                :icon="!game.like ? 'favorite_border' : 'favorite'"
+                @click="likeGame(index)"
+              />
+              <q-btn v-if="game.hasDemo == 'true'" outline label="demo" style="margin-top: 20px" />
+            </q-btn-group>
+          </div>
+        </q-card>
+      </div>
+
+      <!-- One game end  -->
+    </div>
+  </q-page>
+</template>
+
+<script>
+import { mapGetters, mapActions, mapState } from "vuex";
+export default {
+  computed: {
+    ...mapGetters(["allGames", "favoriteGamesList"]),
+    ...mapState(["games", "favorites"])
+  },
+  methods: {
+    likeGame(index) {
+      this.allGames[index].like = !this.allGames[index].like;
+
+      if (this.favoriteGamesList.indexOf(this.allGames[index].id) > -1) {
+        const i = this.favoriteGamesList.indexOf(this.allGames[index].id);
+        this.favoriteGamesList.splice(i, 1);
+      } else {
+        this.favoriteGamesList.push(this.allGames[index].id);
+      }
+    }
+  }
+};
+</script>
