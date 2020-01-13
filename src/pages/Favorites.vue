@@ -30,7 +30,7 @@
         </q-card>
       </div>
     </div>
-    <div v-if="!favoriteGames.length" class="no-favotites absolute-center">
+    <div v-if="!favoriteGames.length" class="no-favorites absolute-center">
       <div class="text-h5 text-center">
         <q-icon name="favorite_border" size="100px" class="text-center q-pb-lg" />
         <p>No favorites yet</p>
@@ -73,3 +73,8 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+.no-favorites {
+  opacity: 0.3;
+}
+</style>
