@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-lg">
-    <h5>All Games</h5>
+    <h3>All Games</h3>
     <div class="row">
       <!-- One game  -->
 
@@ -13,13 +13,13 @@
           <q-card-section>
             <div class="text-h6">{{ game.title }}</div>
           </q-card-section>
-          <div class="q-pa-md col-12 col-md-8 row">
+          <div class="q-pa-md col-12 col-md-8 row justify-between">
             <q-parallax
-              :src="`https://i.picsum.photos/id/${game.id}/1700/1200.jpg`"
+              :src="`https://i.picsum.photos/id/${game.id}/400/300.jpg`"
               :height="150"
               class="col-12 col-md-8"
             />
-            <q-btn-group spread class="q-pa-md col-12 col-md-4 column justify-between">
+            <q-btn-group spread class="q-pa-md q-mt-md col-12 col-md-3 column justify-between">
               <q-btn
                 outline
                 :icon="!game.like ? 'favorite_border' : 'favorite'"
@@ -48,11 +48,25 @@ export default {
       this.allGames[index].like = !this.allGames[index].like;
 
       if (this.favoriteGamesList.indexOf(this.allGames[index].id) > -1) {
-        const i = this.favoriteGamesList.indexOf(this.allGames[index].id);
-        this.favoriteGamesList.splice(i, 1);
+        this.unlikeGame(index);
       } else {
         this.favoriteGamesList.push(this.allGames[index].id);
       }
+    },
+    unlikeGame(index) {
+      this.$q
+        .dialog({
+          title: "Confirm",
+          message: "The game will be removed from favorits",
+          cancel: true,
+          persistent: true
+        })
+        .onOk(() => {
+          const i = this.favoriteGamesList.indexOf(this.allGames[index].id);
+          this.favoriteGamesList.splice(i, 1);
+
+          this.$q.notify("The game removed from favorites");
+        });
     }
   }
 };

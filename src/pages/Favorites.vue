@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-lg">
-    <h5>Favorites</h5>
+    <h5 class="text-h5">Favorites</h5>
     <div class="row">
       <div
         class="q-pa-md col-3 col-xs-12 col-sm-6 col-lg-4 col-xl-3"
@@ -11,13 +11,13 @@
           <q-card-section>
             <div class="text-h6">{{ game.title }}</div>
           </q-card-section>
-          <div class="q-pa-md col-12 col-md-8 row">
+          <div class="q-pa-md col-12 col-md-8 row justify-between">
             <q-parallax
-              :src="`https://i.picsum.photos/id/${game.id}/1700/1200.jpg`"
+              :src="`https://i.picsum.photos/id/${game.id}/400/300.jpg`"
               :height="150"
               class="col-12 col-md-8"
             />
-            <q-btn-group spread class="q-pa-md col-12 col-md-4 column justify-between">
+            <q-btn-group spread class="q-pa-md q-mt-md col-12 col-md-3 column justify-between">
               <q-btn
                 outline
                 :icon="!game.like ? 'favorite_border' : 'favorite'"
@@ -27,6 +27,12 @@
             </q-btn-group>
           </div>
         </q-card>
+      </div>
+    </div>
+    <div v-if="!favoriteGames.length" class="no-favotites absolute-center">
+      <div class="text-h5 text-center">
+        <q-icon name="favorite_border" size="100px" class="text-center q-pb-lg" />
+        <p>No favorites yet</p>
       </div>
     </div>
   </q-page>
@@ -42,9 +48,22 @@ export default {
   },
   methods: {
     unlikeGame(index) {
-      const i = this.favoriteGamesList.indexOf(this.favoriteGames[index].id);
-      this.favoriteGamesList.splice(i, 1);
-      this.favoriteGames[index].like = false;
+      this.$q
+        .dialog({
+          title: "Confirm",
+          message: "The game will be removed from favorits",
+          cancel: true,
+          persistent: true
+        })
+        .onOk(() => {
+          const i = this.favoriteGamesList.indexOf(
+            this.favoriteGames[index].id
+          );
+          this.favoriteGamesList.splice(i, 1);
+          this.favoriteGames[index].like = false;
+
+          this.$q.notify("The game removed from favorites");
+        });
     }
   }
 };
