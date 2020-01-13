@@ -19,7 +19,8 @@
       <q-btn
         to="/favorites"
         exact
-        color="teal-10"
+        color="dark"
+        :text-color="favoritesCount !== 0 ? 'red' : ''"
         :label="favoritesCount !== 0 ? `Favorites (${favoritesCount})` : 'Favorites'"
         icon="favorites"
       />
