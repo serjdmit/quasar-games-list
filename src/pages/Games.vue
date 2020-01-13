@@ -22,6 +22,7 @@
             <q-btn-group spread class="q-pa-md q-mt-md col-12 col-md-3 column justify-between">
               <q-btn
                 outline
+                :text-color="!game.like ? '' : 'red'"
                 :icon="!game.like ? 'favorite_border' : 'favorite'"
                 @click="likeGame(index, game.title)"
               />
@@ -45,11 +46,10 @@ export default {
   },
   methods: {
     likeGame(index, title) {
-      this.allGames[index].like = !this.allGames[index].like;
-
       if (this.favoriteGamesList.indexOf(this.allGames[index].id) > -1) {
         this.unlikeGame(index, title);
       } else {
+        this.allGames[index].like = true;
         this.favoriteGamesList.push(this.allGames[index].id);
         this.$q.notify(`${title} added to favorites`);
       }
@@ -65,7 +65,7 @@ export default {
         .onOk(() => {
           const i = this.favoriteGamesList.indexOf(this.allGames[index].id);
           this.favoriteGamesList.splice(i, 1);
-
+          this.allGames[index].like = false;
           this.$q.notify(`${title} removed from favorites`);
         });
     }

@@ -20,6 +20,7 @@
             <q-btn-group spread class="q-pa-md q-mt-md col-12 col-md-3 column justify-between">
               <q-btn
                 outline
+                :text-color="!game.like ? '' : 'red'"
                 :icon="!game.like ? 'favorite_border' : 'favorite'"
                 @click="unlikeGame(index, game.title)"
               />
