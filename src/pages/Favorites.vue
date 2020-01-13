@@ -2,40 +2,15 @@
   <q-page class="q-pa-lg">
     <h3 class="text-h5">Favorites</h3>
     <div class="row">
-      <div
-        class="q-pa-md col-3 col-xs-12 col-sm-6 col-lg-4 col-xl-3"
+      <game-component
         v-for="(game, index) in favoriteGames"
         :key="index"
-      >
-        <q-card class="my-card">
-          <q-card-section>
-            <div class="text-h6">{{ game.title }}</div>
-          </q-card-section>
-          <div class="q-pa-md col-12 col-md-8 row justify-between">
-            <q-parallax
-              :src="`https://i.picsum.photos/id/${game.id}/400/300.jpg`"
-              :height="150"
-              class="col-12 col-md-8"
-            />
-            <q-btn-group spread class="q-pa-md q-mt-md col-12 col-md-3 column justify-between">
-              <q-btn
-                outline
-                :text-color="!game.like ? '' : 'red'"
-                :icon="!game.like ? 'favorite_border' : 'favorite'"
-                @click="unlikeGame(index, game.title, 'top')"
-              />
-              <q-btn v-if="game.hasDemo == 'true'" outline label="demo" style="margin-top: 20px" />
-            </q-btn-group>
-          </div>
-        </q-card>
-      </div>
+        :game="game"
+        :index="index"
+        @like="unlikeGame(index, game.title, 'top')"
+      />
     </div>
-    <div v-if="!favoriteGames.length" class="no-favorites absolute-center">
-      <div class="text-h5 text-center">
-        <q-icon name="favorite_border" size="100px" class="text-center q-pb-lg" />
-        <p>No favorites yet</p>
-      </div>
-    </div>
+    <empty-page :elements="favoriteGames" />
   </q-page>
 </template>
 
@@ -70,11 +45,10 @@ export default {
           });
         });
     }
+  },
+  components: {
+    "game-component": require("components/GameComponent.vue").default,
+    "empty-page": require("components/EmptyPage.vue").default
   }
 };
 </script>
-<style lang="scss" scoped>
-.no-favorites {
-  opacity: 0.3;
-}
-</style>

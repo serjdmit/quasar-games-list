@@ -1,46 +1,15 @@
 <template>
   <q-page class="q-pa-lg">
     <h3 class="text-h5">All Games</h3>
-    <div class="row">
-      <!-- One game  -->
 
-      <div
-        class="q-pa-md col-3 col-xs-12 col-sm-6 col-lg-4 col-xl-3"
+    <div class="row">
+      <game-component
         v-for="(game, index) in allGames"
         :key="index"
-      >
-        <q-card class="my-card">
-          <q-card-section>
-            <div class="text-h6">{{ game.title }}</div>
-          </q-card-section>
-          <div class="q-pa-md col-12 col-md-8 row justify-between">
-            <q-parallax
-              :src="`https://i.picsum.photos/id/${game.id}/400/300.jpg`"
-              :height="150"
-              class="col-12 col-md-8"
-            />
-            <q-btn-group
-              spread
-              class="q-pa-md q-mt-md col-12 col-md-3 column justify-between"
-            >
-              <q-btn
-                outline
-                :text-color="!game.like ? '' : 'red'"
-                :icon="!game.like ? 'favorite_border' : 'favorite'"
-                @click="likeGame(index, game.title, 'top')"
-              />
-              <q-btn
-                v-if="game.hasDemo == 'true'"
-                outline
-                label="demo"
-                style="margin-top: 20px"
-              />
-            </q-btn-group>
-          </div>
-        </q-card>
-      </div>
-
-      <!-- One game end  -->
+        :game="game"
+        :index="index"
+        @like="likeGame(index, game.title, 'top')"
+      />
     </div>
   </q-page>
 </template>
@@ -87,6 +56,9 @@ export default {
           });
         });
     }
+  },
+  components: {
+    "game-component": require("components/GameComponent.vue").default
   }
 };
 </script>
