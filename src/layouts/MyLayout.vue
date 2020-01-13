@@ -3,7 +3,7 @@
     <q-header :reveal-offset="500" class="header">
       <div class="q-px-lg q-pt-lg">
         <div class="text-h2">Games</div>
-        <div class="text-subtitle">All Games</div>
+        <div class="text-subtitle">My Games</div>
         <q-img src="statics/game.jpg" class="header-image absolute-top" />
       </div>
     </q-header>
@@ -15,7 +15,7 @@
     </q-page-container>
 
     <q-btn-group spread class="fixed-bottom">
-      <q-btn to="/" exact color="light-blue-10" label="All Games" icon="games" class="q-pa-lg" />
+      <q-btn to="/" exact color="light-blue-10" label="All Games" icon="games" class="q-pa-sm" />
       <q-btn
         to="/favorites"
         exact
@@ -44,6 +44,14 @@ export default {
 .header {
   height: 200px;
   overflow: hidden;
+
+  @media screen and (max-width: 599px) {
+    height: 100px;
+
+    .text-subtitle {
+      display: none;
+    }
+  }
 }
 .header-image {
   height: 200px;

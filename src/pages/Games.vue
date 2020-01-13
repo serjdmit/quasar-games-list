@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-lg">
-    <h3>All Games</h3>
+    <h3 class="text-h5">All Games</h3>
     <div class="row">
       <!-- One game  -->
 
@@ -24,7 +24,7 @@
                 outline
                 :text-color="!game.like ? '' : 'red'"
                 :icon="!game.like ? 'favorite_border' : 'favorite'"
-                @click="likeGame(index, game.title)"
+                @click="likeGame(index, game.title, 'top-right')"
               />
               <q-btn v-if="game.hasDemo == 'true'" outline label="demo" style="margin-top: 20px" />
             </q-btn-group>
@@ -45,16 +45,20 @@ export default {
     ...mapState(["games", "favorites"])
   },
   methods: {
-    likeGame(index, title) {
+    likeGame(index, title, position) {
       if (this.favoriteGamesList.indexOf(this.allGames[index].id) > -1) {
-        this.unlikeGame(index, title);
+        this.unlikeGame(index, title, position);
       } else {
         this.allGames[index].like = true;
         this.favoriteGamesList.push(this.allGames[index].id);
-        this.$q.notify(`${title} added to favorites`);
+        this.$q.notify({
+          position,
+          message: `${title} added to favorites`,
+          icon: "favorite"
+        });
       }
     },
-    unlikeGame(index, title) {
+    unlikeGame(index, title, position) {
       this.$q
         .dialog({
           title: "Confirm",
@@ -66,7 +70,11 @@ export default {
           const i = this.favoriteGamesList.indexOf(this.allGames[index].id);
           this.favoriteGamesList.splice(i, 1);
           this.allGames[index].like = false;
-          this.$q.notify(`${title} removed from favorites`);
+          this.$q.notify({
+            position,
+            message: `${title} removed from favorites`,
+            icon: "favorite_border"
+          });
         });
     }
   }

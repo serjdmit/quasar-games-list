@@ -1,6 +1,6 @@
 <template>
   <q-page class="q-pa-lg">
-    <h5 class="text-h5">Favorites</h5>
+    <h3 class="text-h5">Favorites</h3>
     <div class="row">
       <div
         class="q-pa-md col-3 col-xs-12 col-sm-6 col-lg-4 col-xl-3"
@@ -22,7 +22,7 @@
                 outline
                 :text-color="!game.like ? '' : 'red'"
                 :icon="!game.like ? 'favorite_border' : 'favorite'"
-                @click="unlikeGame(index, game.title)"
+                @click="unlikeGame(index, game.title, 'top-right')"
               />
               <q-btn v-if="game.hasDemo == 'true'" outline label="demo" style="margin-top: 20px" />
             </q-btn-group>
@@ -48,7 +48,7 @@ export default {
     ...mapState(["favorites"])
   },
   methods: {
-    unlikeGame(index, title) {
+    unlikeGame(index, title, position) {
       this.$q
         .dialog({
           title: "Confirm",
@@ -63,7 +63,11 @@ export default {
           this.favoriteGamesList.splice(i, 1);
           this.favoriteGames[index].like = false;
 
-          this.$q.notify(`${title} removed from favorites`);
+          this.$q.notify({
+            position,
+            message: `${title} removed from favorites`,
+            icon: "delete"
+          });
         });
     }
   }
