@@ -22,7 +22,7 @@
         color="dark"
         :text-color="favoritesCount !== 0 ? 'red' : ''"
         :label="favoritesCount !== 0 ? `Favorites (${favoritesCount})` : 'Favorites'"
-        icon="favorites"
+        icon="favorite"
       />
     </q-btn-group>
   </q-layout>

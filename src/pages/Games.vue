@@ -24,7 +24,7 @@
                 outline
                 :text-color="!game.like ? '' : 'red'"
                 :icon="!game.like ? 'favorite_border' : 'favorite'"
-                @click="likeGame(index, game.title, 'top-right')"
+                @click="likeGame(index, game.title, 'top')"
               />
               <q-btn v-if="game.hasDemo == 'true'" outline label="demo" style="margin-top: 20px" />
             </q-btn-group>
