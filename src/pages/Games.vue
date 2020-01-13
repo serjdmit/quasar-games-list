@@ -19,14 +19,22 @@
               :height="150"
               class="col-12 col-md-8"
             />
-            <q-btn-group spread class="q-pa-md q-mt-md col-12 col-md-3 column justify-between">
+            <q-btn-group
+              spread
+              class="q-pa-md q-mt-md col-12 col-md-3 column justify-between"
+            >
               <q-btn
                 outline
                 :text-color="!game.like ? '' : 'red'"
                 :icon="!game.like ? 'favorite_border' : 'favorite'"
                 @click="likeGame(index, game.title, 'top')"
               />
-              <q-btn v-if="game.hasDemo == 'true'" outline label="demo" style="margin-top: 20px" />
+              <q-btn
+                v-if="game.hasDemo == 'true'"
+                outline
+                label="demo"
+                style="margin-top: 20px"
+              />
             </q-btn-group>
           </div>
         </q-card>
@@ -53,6 +61,8 @@ export default {
         this.favoriteGamesList.push(this.allGames[index].id);
         this.$q.notify({
           position,
+          textColor: "red",
+          color: "black",
           message: `${title} added to favorites`,
           icon: "favorite"
         });
